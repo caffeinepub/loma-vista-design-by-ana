@@ -1,0 +1,300 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ─────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/assets/fonts/InstrumentSerif.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design Tokens ─────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Palette: Warm cream, aged leather, Texas sage, dusty parchment */
+    /* Background — dusty warm cream */
+    --background: 0.975 0.006 75;
+    --foreground: 0.22 0.025 55;
+
+    /* Card — warm off-white parchment */
+    --card: 0.97 0.008 72;
+    --card-foreground: 0.22 0.025 55;
+
+    /* Popover */
+    --popover: 0.97 0.008 72;
+    --popover-foreground: 0.22 0.025 55;
+
+    /* Primary — rich cognac leather */
+    --primary: 0.48 0.11 52;
+    --primary-foreground: 0.975 0.006 75;
+
+    /* Secondary — sage green */
+    --secondary: 0.88 0.035 145;
+    --secondary-foreground: 0.28 0.045 145;
+
+    /* Muted — warm parchment */
+    --muted: 0.93 0.014 75;
+    --muted-foreground: 0.52 0.03 62;
+
+    /* Accent — aged gold / warm amber */
+    --accent: 0.78 0.1 72;
+    --accent-foreground: 0.22 0.025 55;
+
+    /* Destructive */
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    /* Border & Input — warm subtle line */
+    --border: 0.87 0.02 70;
+    --input: 0.87 0.02 70;
+    --ring: 0.48 0.11 52;
+
+    /* Chart */
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+
+    /* Sidebar */
+    --sidebar: 0.22 0.025 55;
+    --sidebar-foreground: 0.975 0.006 75;
+    --sidebar-primary: 0.48 0.11 52;
+    --sidebar-primary-foreground: 0.975 0.006 75;
+    --sidebar-accent: 0.28 0.03 58;
+    --sidebar-accent-foreground: 0.975 0.006 75;
+    --sidebar-border: 0.32 0.025 55;
+    --sidebar-ring: 0.48 0.11 52;
+
+    /* Custom brand tokens */
+    --leather: 0.48 0.11 52;
+    --leather-light: 0.65 0.09 56;
+    --leather-dark: 0.32 0.1 48;
+    --cream: 0.975 0.006 75;
+    --parchment: 0.94 0.016 72;
+    --sage: 0.62 0.085 145;
+    --sage-light: 0.82 0.06 145;
+    --warm-dark: 0.2 0.028 50;
+    --warm-darker: 0.15 0.03 50;
+    --gold: 0.75 0.13 78;
+    --gold-muted: 0.88 0.07 78;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "General Sans", sans-serif;
+  }
+}
+
+/* ─── Typography helpers ─────────────────────────────────────────────── */
+.font-display {
+  font-family: "Fraunces", serif;
+}
+
+.font-serif {
+  font-family: "Instrument Serif", serif;
+}
+
+/* ─── Custom Component Styles ────────────────────────────────────────── */
+
+/* Noise texture overlay using pseudo-element trick */
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+}
+
+/* Decorative divider */
+.divider-ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.divider-ornament::before,
+.divider-ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: oklch(var(--border));
+}
+
+/* Nav link underline effect */
+.nav-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: oklch(var(--leather));
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Warm dark section */
+.section-dark {
+  background: oklch(var(--warm-dark));
+  color: oklch(var(--cream));
+}
+
+.section-darker {
+  background: oklch(var(--warm-darker));
+  color: oklch(var(--cream));
+}
+
+/* Quote block styling */
+.quote-block {
+  border-left: 3px solid oklch(var(--leather));
+  padding-left: 1.5rem;
+  font-style: italic;
+}
+
+/* ─── Section Ornament Divider ───────────────────────────────────────── */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    oklch(var(--border)),
+    transparent
+  );
+}
+
+.ornament-divider.on-dark::before,
+.ornament-divider.on-dark::after {
+  background: linear-gradient(
+    to right,
+    transparent,
+    oklch(1 0 0 / 0.12),
+    transparent
+  );
+}
+
+.ornament-diamond {
+  width: 7px;
+  height: 7px;
+  background: oklch(var(--leather));
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ─── Stat card atmosphere ───────────────────────────────────────────── */
+.stats-bar-inner {
+  position: relative;
+}
+
+.stats-bar-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 80% at 50% 50%,
+    oklch(0.28 0.04 52 / 0.6) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ─── Service card number mark ───────────────────────────────────────── */
+.service-num {
+  font-family: "Fraunces", serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: oklch(var(--leather) / 0.12);
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Featured service card ──────────────────────────────────────────── */
+.service-card-featured {
+  background: oklch(var(--warm-dark));
+  color: oklch(var(--cream));
+  border-color: transparent;
+}
+
+.service-card-featured .service-title {
+  color: oklch(var(--cream));
+}
+
+.service-card-featured .service-subtitle {
+  color: oklch(var(--gold));
+}
+
+.service-card-featured .service-desc {
+  color: oklch(var(--cream) / 0.7);
+}
+
+.service-card-featured .service-price {
+  color: oklch(var(--gold));
+}
+
+.service-card-featured .service-divider {
+  border-color: oklch(1 0 0 / 0.12);
+}
+
+.service-card-featured .service-num {
+  color: oklch(var(--gold) / 0.15);
+}
+
+.service-card-featured .service-icon {
+  background: oklch(1 0 0 / 0.08);
+  color: oklch(var(--gold));
+}
